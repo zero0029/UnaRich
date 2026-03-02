@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>UnaRich - 報表分析</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" type="image/png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="page-charts">
+    <header class="app-header">
+      <h1>UnaRich 數據分析 📊</h1>
+    </header>
+
+    <main class="container">
+      <div class="month-selector card">
+        <button onclick="changeMonth(-1)" class="nav-btn">◀</button>
+        <div id="current-month-display">2026 年 03 月</div>
+        <button onclick="changeMonth(1)" class="nav-btn">▶</button>
+      </div>
+
+      <div class="card" id="summary-card"></div>
+
+      <div class="card">
+        <h2 style="margin-bottom: 15px">💸 錢錢去哪兒 (支出)</h2>
+        <div class="chart-container">
+          <canvas id="expenseChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-bottom: 15px">💰 錢錢從哪來 (收入)</h2>
+        <div class="chart-container">
+          <canvas id="incomeChart"></canvas>
+        </div>
+      </div>
+    </main>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <span class="nav-icon">📝</span>
+        <p>記帳</p>
+      </a>
+      <a href="charts.html" class="nav-item active">
+        <span class="nav-icon">📊</span>
+        <p>報表</p>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <p>設定</p>
+      </a>
+    </nav>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

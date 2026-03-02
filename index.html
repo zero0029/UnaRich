@@ -3,63 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>UnaRich</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet" />
+    <title>UnaRich - 記帳</title>
+    <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#ffd93d" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" type="image/png" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  <body>
-    <div id="page-add" class="page active">
-      <div class="card">
-        <h2>☁️ 紀錄錢錢</h2>
-        <div class="type-selector">
-          <button id="btn-exp" class="type-btn active-exp" onclick="setType('支出')">💸 支出</button>
-          <button id="btn-inc" class="type-btn" onclick="setType('收入')">💰 收入</button>
+  <body class="page-home">
+    <header class="app-header">
+      <h1>UnaRich 📝</h1>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <div class="type-switcher">
+          <button id="btn-exp" class="type-btn active-exp" onclick="setType('支出')">支出</button>
+          <button id="btn-inc" class="type-btn" onclick="setType('收入')">收入</button>
         </div>
-        <input type="date" id="record-date" />
-        <select id="category"></select>
-        <input type="number" id="amount" placeholder="多少錢呢？" inputmode="decimal" />
-        <input type="text" id="note" placeholder="描述" />
+
+        <div class="input-group">
+          <label>日期</label>
+          <input type="date" id="record-date" />
+        </div>
+
+        <div class="input-group">
+          <label>金額</label>
+          <input type="number" id="amount" placeholder="0" inputmode="decimal" />
+        </div>
+
+        <div class="input-group">
+          <label>分類</label>
+          <select id="category"></select>
+        </div>
+
+        <div class="input-group">
+          <label>備註</label>
+          <input type="text" id="note" placeholder="寫點什麼吧..." />
+        </div>
+
         <button class="save-btn" onclick="addRecord()">🌟 儲存這筆紀錄</button>
-      </div>
-      <div class="card">
-        <h2>📜 最近的收支</h2>
+      </section>
+
+      <section class="card">
+        <h2 style="margin-bottom: 15px">最近紀錄 🕒</h2>
         <div id="recent-list"></div>
-      </div>
-    </div>
-    <div id="page-chart" class="page">
-      <div class="card">
-        <h2>📊 錢錢去哪兒</h2>
-        <canvas id="myChart"></canvas>
-      </div>
-      <div class="card" id="summary-card"></div>
-    </div>
-    <div id="page-settings" class="page">
-      <div class="card">
-        <h2>⚙️ 資料管理</h2>
-        <button style="background: var(--secondary); color: white; border: none" onclick="exportData()">📥 備份(JSON)</button>
-        <input type="file" id="importFile" accept=".json" style="margin-top: 20px" />
-        <button style="background: var(--accent); color: white; border: none" onclick="importData()">📤 恢復備份</button>
-      </div>
-      <div class="card">
-        <h2>🌙 外觀設定</h2>
-        <div style="display: flex; justify-content: space-between; align-items: center">
-          <span>深色模式</span>
-          <button id="dark-mode-toggle" onclick="toggleDarkMode()" style="width: auto; padding: 8px 20px">開啟</button>
-        </div>
-      </div>
-    </div>
-    <div class="nav-bar">
-      <div class="nav-item active" onclick="showPage('add', this)">🐣 記帳</div>
-      <div class="nav-item" onclick="showPage('chart', this)">📈 報表</div>
-      <div class="nav-item" onclick="showPage('settings', this)">🛠️ 設定</div>
-    </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item active">
+        <span class="nav-icon">📝</span>
+        <p>記帳</p>
+      </a>
+      <a href="charts.html" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <p>報表</p>
+      </a>
+      <a href="settings.html" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        <p>設定</p>
+      </a>
+    </nav>
+
+    <div id="toast" class="toast"></div>
+
     <div id="custom-modal" class="modal-overlay">
       <div class="modal-card">
         <div class="modal-icon">🥺</div>
@@ -71,7 +78,7 @@
         </div>
       </div>
     </div>
-    <div id="toast" class="toast"></div>
+
     <script src="script.js"></script>
   </body>
 </html>

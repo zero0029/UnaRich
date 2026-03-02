@@ -1,20 +1,17 @@
-/* --- 1. 核心重設：解決所有跑版問題 --- */
+/* --- 1. 核心重設 --- */
 * {
     margin: 0;
     padding: 0;
-    /* 關鍵：確保 padding 不會撐開寬度，解決左右跑版 */
     box-sizing: border-box; 
-    /* 你的聰明小技巧：讓字體邊角變圓 */
     -webkit-text-stroke: 0.1px; 
     -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
     max-width: 100vw;
-    overflow-x: hidden; /* 徹底禁止左右晃動 */
+    overflow-x: hidden;
 }
 
-/* --- 2. 顏色劇本定義 --- */
 :root {
     --bg-color: #f0f9ff;         
     --card-bg: #ffffff; 
@@ -22,7 +19,6 @@ html, body {
     --text-sub: #94a3b8;
     --border-color: #eef2f5;
     --card-shadow: rgba(162, 210, 255, 0.2);
-    
     --primary: #ffd93d;          
     --secondary: #a2d2ff;        
     --accent: #6eb5ff;           
@@ -38,30 +34,34 @@ body.dark-mode {
     --text-sub: #94a3b8;
     --border-color: #333333;
     --card-shadow: rgba(0, 0, 0, 0.4);
-    
     --primary: #facc15;          
     --secondary: #3b82f6;        
     --accent: #60a5fa;
     --nav-bg: rgba(30, 30, 30, 0.9);
 }
 
-/* --- 3. 基礎樣式 --- */
+/* --- 2. 基礎樣式 --- */
 body { 
-    font-family: 'Noto Sans TC', "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     background: var(--bg-color); 
     padding: 15px; 
-    padding-bottom: 100px; /* 為底部導覽留空間 */
+    padding-bottom: 100px;
     color: var(--text-main);
     transition: background 0.3s, color 0.3s;
     line-height: 1.5;
 }
 
-/* 深色模式下微調描邊 */
-body.dark-mode * {
-    -webkit-text-stroke: 0.05px;
+.app-header {
+    text-align: center;
+    padding: 20px 0;
 }
 
-/* --- 4. 卡片元件 --- */
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* --- 3. 卡片與元件 --- */
 .card { 
     background: var(--card-bg); 
     padding: 20px; 
@@ -69,11 +69,10 @@ body.dark-mode * {
     box-shadow: 0 6px 20px var(--card-shadow);
     margin-bottom: 15px; 
     border: 1px solid var(--border-color);
-    width: 100%; /* 確保卡片不超出螢幕 */
 }
 
 h2 { 
-    margin: 0 0 15px 0; 
+    margin-bottom: 15px; 
     font-size: 1.15rem; 
     color: var(--accent); 
     display: flex; 
@@ -81,247 +80,87 @@ h2 {
     gap: 8px; 
 }
 
-/* --- 5. 表單元件：解決高度與寬度不對齊 --- */
-input, select, button { 
-    font-family: inherit;
-    width: 100%; /* 寬度填滿卡片 */
-    display: block; 
-    
-    /* 統一高度與對齊 */
+/* 表單元件 */
+input, select, .type-btn, .save-btn { 
     height: 50px; 
-    padding: 0 15px; 
-    margin: 8px 0; 
-    
-    border: 2px solid var(--border-color); 
     border-radius: 16px; 
-    font-size: 16px; 
-    outline: none;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+input, select {
+    width: 100%;
+    padding: 0 15px;
+    margin: 8px 0;
+    border: 2px solid var(--border-color);
     background: var(--card-bg);
     color: var(--text-main);
-    transition: all 0.2s;
-    
-    /* 消除 iOS/Android 預設外觀 */
+    outline: none;
     appearance: none;
-    -webkit-appearance: none;
-}
-
-/* 針對日期欄位的垂直居中修正 */
-input[type="date"] {
-    display: flex;
-    align-items: center;
-}
-
-/* 針對 iOS Safari 日期文字位移修正 */
-input[type="date"]::-webkit-date-and-time-value {
-    line-height: 50px;
-    height: 50px;
-}
-
-input:focus { 
-    border-color: var(--secondary); 
 }
 
 /* 類型選擇器 */
-.type-selector { 
-    display: flex; 
-    gap: 10px; 
-    margin-bottom: 5px; 
-    width: 100%;
-}
+.type-switcher { display: flex; gap: 10px; margin-bottom: 15px; }
 .type-btn { 
-    flex: 1; 
-    margin: 0; /* 覆蓋全域的 margin */
-    background: var(--card-bg); 
-    color: var(--text-sub);
-    font-weight: bold;
-    cursor: pointer;
-    justify-content: center;
-    align-items: center;
+    flex: 1; border: 2px solid var(--border-color); 
+    background: var(--card-bg); color: var(--text-sub); font-weight: bold; cursor: pointer;
 }
 .type-btn.active-exp { background: var(--expense); color: white; border-color: var(--expense); }
 .type-btn.active-inc { background: var(--income); color: white; border-color: var(--income); }
 
-/* 儲存按鈕 */
 .save-btn { 
-    background: var(--primary); 
-    color: #4a4a4a; 
-    border: none; 
-    font-weight: bold; 
-    margin-top: 10px; 
-    box-shadow: 0 4px 0 #e6c235; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%; background: var(--primary); color: #4a4a4a; border: none; 
+    font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #e6c235; margin-top: 10px;
 }
 .save-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #e6c235; }
 
-/* --- 6. 紀錄列表 --- */
-.record-item { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 14px 0; 
-    border-bottom: 1px solid var(--border-color); 
-}
-.tag { 
-    font-size: 12px; 
-    background: var(--bg-color); 
-    color: var(--accent); 
-    padding: 4px 10px; 
-    border-radius: 12px; 
-}
-.date-label { font-size: 11px; color: var(--text-sub); }
-.amt-exp { color: var(--expense); font-weight: 800; }
-.amt-inc { color: var(--income); font-weight: 800; }
-
-/* --- 7. 底部導覽列 --- */
-.nav-bar { 
-    position: fixed; 
-    bottom: 15px; 
-    left: 15px; 
-    right: 15px; 
-    background: var(--nav-bg); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px);
-    display: flex; 
-    border-radius: 20px; 
-    padding: 10px 0; 
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1); 
-    border: 1px solid var(--border-color);
-    z-index: 1000; /* 確保在最上層 */
-}
-.nav-item { 
-    flex: 1; 
-    text-align: center; 
-    font-size: 13px; 
-    color: var(--text-sub); 
-    cursor: pointer; 
-}
-.nav-item.active { 
-    color: var(--accent); 
-    font-weight: bold; 
+/* --- 4. 圖表專用樣式 (解決跑版) --- */
+.month-selector {
+    display: flex; align-items: center; justify-content: center; gap: 20px;
 }
 
-/* --- 8. 分頁與動畫 --- */
-.page { display: none; }
-.page.active { display: block; animation: slideUp 0.3s ease-out; }
-
-@keyframes slideUp { 
-    from { opacity: 0; transform: translateY(20px); } 
-    to { opacity: 1; transform: translateY(0); } 
+#current-month-display {
+    font-size: 1.1rem; font-weight: 800; min-width: 120px; text-align: center;
 }
 
-canvas {
-    max-width: 100%;
+.nav-btn {
+    background: #fff3c4; border: none; width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; color: #b08d00;
+}
+
+.chart-container {
+    position: relative;
+    height: 280px; /* 固定高度防止跑版 */
+    width: 100%;
     margin-top: 10px;
 }
 
-/* 針對日期欄位的最終修正 */
-input[type="date"] {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 讓文字在左，圖標在右 */
-    position: relative;
-    padding-right: 15px; /* 給右邊圖標一點空間 */
+canvas {
+    max-width: 100% !important;
+    max-height: 100% !important;
 }
 
-/* 針對 Chrome / Android 的小月曆圖標修正 */
-input[type="date"]::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    position: absolute;
-    right: 15px; /* 強制把月曆圖標釘在最右邊 */
-    padding: 5px;
-    margin: 0;
-    filter: invert(0.5); /* 讓圖標顏色不要太深 (選配) */
+/* --- 5. 底部導覽列 --- */
+.bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 75px;
+    background: var(--nav-bg); backdrop-filter: blur(10px);
+    display: flex; justify-content: space-around; align-items: center;
+    border-top: 1px solid var(--border-color); z-index: 1000;
 }
 
-/* 針對 iOS Safari 的特殊處理：確保文字不會擠到圖標 */
-input[type="date"]::-webkit-date-and-time-value {
-    flex: 1; /* 讓文字佔滿剩餘空間 */
-    text-align: left;
-    line-height: 50px;
-    height: 50px;
-}
+.nav-item { text-decoration: none; text-align: center; color: var(--text-sub); flex: 1; }
+.nav-item.active { color: var(--accent); font-weight: bold; }
+.nav-icon { font-size: 22px; display: block; }
+.nav-item p { font-size: 11px; }
 
-/* --- UnaRich 專屬氣泡提示 --- */
+/* --- 6. 紀錄列表與彈窗 --- */
+.record-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+.amt-exp { color: var(--expense); font-weight: 800; }
+.amt-inc { color: var(--income); font-weight: 800; }
+
 .toast {
-    position: fixed;
-    bottom: 100px; /* 避開底部導覽列 */
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: rgba(74, 74, 74, 0.9);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: bold;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 2000;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    white-space: nowrap;
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 20px;
+    opacity: 0; transition: 0.3s; z-index: 2000; pointer-events: none;
 }
-
-.toast.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* --- UnaRich 專屬對話框樣式 --- */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.modal-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-card {
-    background: var(--card-bg);
-    width: 85%;
-    max-width: 320px;
-    padding: 25px;
-    border-radius: 28px;
-    text-align: center;
-    transform: scale(0.8);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.modal-overlay.show .modal-card {
-    transform: scale(1);
-}
-
-.modal-icon { font-size: 40px; margin-bottom: 10px; }
-
-.modal-card h3 { color: var(--text-main); margin-bottom: 8px; }
-
-.modal-card p { color: var(--text-sub); font-size: 14px; margin-bottom: 20px; }
-
-.modal-btns { display: flex; gap: 12px; }
-
-.modal-btns button {
-    flex: 1;
-    height: 45px;
-    border-radius: 12px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-}
-
-.modal-btn-cancel { background: var(--border-color); color: var(--text-main); }
-
-.modal-btn-confirm { background: var(--expense); color: white; }
+.toast.show { opacity: 1; }
