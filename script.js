@@ -206,3 +206,99 @@ function deleteRecord(index) {
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
 }
+
+// 在檔案最上方新增一個變數
+let editIndex = null; 
+
+// 修改後的顯示列表函數：加入一個「編輯」按鈕
+function displayRecent() {
+    const list = document.getElementById('recent-list');
+    const data = JSON.parse(localStorage.getItem('my_cute_budget')) || [];
+    
+    if (data.length === 0) {
+        list.innerHTML = '<p style="text-align:center; color:var(--text-sub); margin: 20px 0;">還沒有紀錄喔 🍃</p>';
+        return;
+    }
+
+    list.innerHTML = data.slice(0, 10).map((r, index) => `
+        <div class="record-item">
+            <div style="display:flex; flex-direction:column; flex: 1;">
+                <span style="font-weight:bold;">${r.note}</span>
+                <span class="date-label">${r.date} · <span class="tag">${r.category}</span></span>
+            </div>
+            <div style="text-align: right; display: flex; align-items: center; gap: 10px;">
+                <span class="${r.type === '支出' ? 'amt-exp' : 'amt-inc'}">
+                    ${r.type === '支出' ? '-' : '+'}${r.amount}
+                </span>
+                <button onclick="prepareEdit(${index})" style="width:auto; padding: 5px; margin:0; background:none; border:none; color:var(--accent); cursor:pointer;">✎</button>
+                <button onclick="deleteRecord(${index})" style="width:auto; padding: 5px; margin:0; background:none; border:none; color:#ccc; font-size:18px; cursor:pointer;">×</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 點擊編輯按鈕時：把資料填回輸入框
+function prepareEdit(index) {
+    const data = JSON.parse(localStorage.getItem('my_cute_budget')) || [];
+    const item = data[index];
+    
+    // 1. 設定目前正在編輯的索引
+    editIndex = index;
+    
+    // 2. 把數值填回欄位
+    setType(item.type);
+    document.getElementById('record-date').value = item.date;
+    document.getElementById('category').value = item.category;
+    document.getElementById('amount').value = item.amount;
+    document.getElementById('note').value = item.note;
+    
+    // 3. 捲動到頂部讓使用者方便修改
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // 4. 暫時改變儲存按鈕的文字
+    const saveBtn = document.querySelector('.save-btn');
+    saveBtn.innerText = "🔄 更新這筆紀錄";
+    saveBtn.style.background = "var(--secondary)";
+}
+
+// 修改原有的 addRecord 函數：判斷是「新增」還是「更新」
+function addRecord() {
+    const date = document.getElementById('record-date').value;
+    const amt = document.getElementById('amount').value;
+    const cat = document.getElementById('category').value;
+    const note = document.getElementById('note').value;
+    
+    if (!date || !amt) return alert('日期和金額都要填喔！');
+
+    const record = {
+        type: currentType,
+        category: cat,
+        amount: parseFloat(amt),
+        note: note || cat,
+        date: date
+    };
+
+    let data = JSON.parse(localStorage.getItem('my_cute_budget')) || [];
+
+    if (editIndex !== null) {
+        // --- 模式：更新 ---
+        data[editIndex] = record;
+        editIndex = null; // 重置
+        document.querySelector('.save-btn').innerText = "🌟 儲存這筆紀錄";
+        document.querySelector('.save-btn').style.background = "var(--primary)";
+    } else {
+        // --- 模式：新增 ---
+        data.push(record);
+    }
+    
+    // 重新排序並儲存
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    localStorage.setItem('my_cute_budget', JSON.stringify(data));
+
+    // 清空欄位
+    document.getElementById('amount').value = '';
+    document.getElementById('note').value = '';
+    displayRecent();
+    updateChart();
+    alert('處理完成囉！✨');
+}
