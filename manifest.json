@@ -1,15 +1,17 @@
 {
-  "name": "UnaRich",
+  "name": "UnaRich - 妳的致富小幫手",
   "short_name": "UnaRich",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f0f9ff",
   "theme_color": "#ffd93d",
+  "description": "UNA的個人理財分析工具",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/2454/2454282.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

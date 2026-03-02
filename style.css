@@ -1,166 +1,85 @@
-/* --- 1. 核心重設 --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
-    -webkit-text-stroke: 0.1px; 
-    -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-    max-width: 100vw;
-    overflow-x: hidden;
-}
-
 :root {
-    --bg-color: #f0f9ff;         
-    --card-bg: #ffffff; 
-    --text-main: #4a4a4a;
-    --text-sub: #94a3b8;
-    --border-color: #eef2f5;
-    --card-shadow: rgba(162, 210, 255, 0.2);
-    --primary: #ffd93d;          
-    --secondary: #a2d2ff;        
-    --accent: #6eb5ff;           
-    --expense: #ff8b8b;          
-    --income: #6bcb77;           
-    --nav-bg: rgba(255, 255, 255, 0.9);
+    --bg-color: #f0f9ff; --card-bg: #ffffff; --text-main: #4a4a4a; --text-sub: #94a3b8;
+    --border-color: #eef2f5; --primary: #ffd93d; --accent: #6eb5ff;
+    --expense: #ff8b8b; --income: #6bcb77; --nav-bg: rgba(255, 255, 255, 0.95);
 }
-
 body.dark-mode {
-    --bg-color: #121212;         
-    --card-bg: #1e1e1e;          
-    --text-main: #e2e8f0;        
-    --text-sub: #94a3b8;
-    --border-color: #333333;
-    --card-shadow: rgba(0, 0, 0, 0.4);
-    --primary: #facc15;          
-    --secondary: #3b82f6;        
-    --accent: #60a5fa;
-    --nav-bg: rgba(30, 30, 30, 0.9);
+    --bg-color: #121212; --card-bg: #1e1e1e; --text-main: #e2e8f0; --border-color: #333;
+    --nav-bg: rgba(30, 30, 30, 0.95);
 }
-
-/* --- 2. 基礎樣式 --- */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-text-stroke: 0.1px; }
 body { 
-    font-family: 'Noto Sans TC', sans-serif;
-    background: var(--bg-color); 
-    padding: 15px; 
-    padding-bottom: 100px;
-    color: var(--text-main);
-    transition: background 0.3s, color 0.3s;
-    line-height: 1.5;
+    font-family: sans-serif; background: var(--bg-color); color: var(--text-main); 
+    padding: 15px; padding-bottom: 90px; transition: 0.3s;
 }
-
-.app-header {
-    text-align: center;
-    padding: 20px 0;
-}
-
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* --- 3. 卡片與元件 --- */
+.container { max-width: 500px; margin: 0 auto; }
+.app-header { text-align: center; padding: 20px 0; }
 .card { 
-    background: var(--card-bg); 
-    padding: 20px; 
-    border-radius: 24px; 
-    box-shadow: 0 6px 20px var(--card-shadow);
-    margin-bottom: 15px; 
-    border: 1px solid var(--border-color);
+    background: var(--card-bg); padding: 20px; border-radius: 24px; 
+    margin-bottom: 15px; border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
-
-h2 { 
-    margin-bottom: 15px; 
-    font-size: 1.15rem; 
-    color: var(--accent); 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-}
-
-/* 表單元件 */
 input, select, .type-btn, .save-btn { 
-    height: 50px; 
-    border-radius: 16px; 
-    font-size: 16px;
-    font-family: inherit;
+    width: 100%; height: 50px; border-radius: 15px; border: 2px solid var(--border-color);
+    background: var(--card-bg); color: var(--text-main); font-size: 16px; margin: 8px 0; padding: 0 15px;
 }
-
-input, select {
-    width: 100%;
-    padding: 0 15px;
-    margin: 8px 0;
-    border: 2px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-main);
-    outline: none;
-    appearance: none;
-}
-
-/* 類型選擇器 */
-.type-switcher { display: flex; gap: 10px; margin-bottom: 15px; }
-.type-btn { 
-    flex: 1; border: 2px solid var(--border-color); 
-    background: var(--card-bg); color: var(--text-sub); font-weight: bold; cursor: pointer;
-}
-.type-btn.active-exp { background: var(--expense); color: white; border-color: var(--expense); }
-.type-btn.active-inc { background: var(--income); color: white; border-color: var(--income); }
-
-.save-btn { 
-    width: 100%; background: var(--primary); color: #4a4a4a; border: none; 
-    font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #e6c235; margin-top: 10px;
-}
+.type-switcher { display: flex; gap: 10px; }
+.type-btn { cursor: pointer; font-weight: bold; color: var(--text-sub); }
+.active-exp { background: var(--expense) !important; color: white !important; border-color: var(--expense) !important; }
+.active-inc { background: var(--income) !important; color: white !important; border-color: var(--income) !important; }
+.save-btn { background: var(--primary); border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #e6c235; }
 .save-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #e6c235; }
-
-/* --- 4. 圖表專用樣式 (解決跑版) --- */
-.month-selector {
-    display: flex; align-items: center; justify-content: center; gap: 20px;
+.bottom-nav { 
+    position: fixed; bottom: 0; left: 0; right: 0; height: 75px; 
+    background: var(--nav-bg); display: flex; align-items: center; border-top: 1px solid var(--border-color);
 }
-
-#current-month-display {
-    font-size: 1.1rem; font-weight: 800; min-width: 120px; text-align: center;
-}
-
-.nav-btn {
-    background: #fff3c4; border: none; width: 36px; height: 36px; border-radius: 50%;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; color: #b08d00;
-}
-
-.chart-container {
-    position: relative;
-    height: 280px; /* 固定高度防止跑版 */
-    width: 100%;
-    margin-top: 10px;
-}
-
-canvas {
-    max-width: 100% !important;
-    max-height: 100% !important;
-}
-
-/* --- 5. 底部導覽列 --- */
-.bottom-nav {
-    position: fixed; bottom: 0; left: 0; right: 0; height: 75px;
-    background: var(--nav-bg); backdrop-filter: blur(10px);
-    display: flex; justify-content: space-around; align-items: center;
-    border-top: 1px solid var(--border-color); z-index: 1000;
-}
-
-.nav-item { text-decoration: none; text-align: center; color: var(--text-sub); flex: 1; }
+.nav-item { flex: 1; text-align: center; text-decoration: none; color: var(--text-sub); }
 .nav-item.active { color: var(--accent); font-weight: bold; }
-.nav-icon { font-size: 22px; display: block; }
-.nav-item p { font-size: 11px; }
-
-/* --- 6. 紀錄列表與彈窗 --- */
+.chart-container { position: relative; height: 260px; width: 100%; margin-top: 10px; }
+.month-selector { display: flex; align-items: center; justify-content: center; gap: 20px; }
+.nav-btn { width: 35px; height: 35px; border-radius: 50%; border: none; background: #fff3c4; cursor: pointer; }
 .record-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
-.amt-exp { color: var(--expense); font-weight: 800; }
-.amt-inc { color: var(--income); font-weight: 800; }
-
-.toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
-    background: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 20px;
-    opacity: 0; transition: 0.3s; z-index: 2000; pointer-events: none;
+.toast { 
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); 
+    background: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 20px; 
+    opacity: 0; transition: 0.3s; pointer-events: none;
 }
-.toast.show { opacity: 1; }
+
+/* 月曆網格佈局 */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day-head {
+    font-weight: bold;
+    font-size: 12px;
+    padding: 10px 0;
+    color: var(--text-sub);
+}
+
+.calendar-day {
+    aspect-ratio: 1 / 1.2;
+    border-radius: 12px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.calendar-day:active { transform: scale(0.9); }
+.calendar-day.today { border: 1px solid var(--primary); background: #fffdf0; }
+.calendar-day.selected { background: var(--secondary); color: white !important; }
+
+/* 月曆上的小金額文字 */
+.cal-exp { font-size: 9px; color: var(--expense); transform: scale(0.8); }
+.cal-inc { font-size: 9px; color: var(--income); transform: scale(0.8); }
+.calendar-day.selected .cal-exp, 
+.calendar-day.selected .cal-inc { color: white; }

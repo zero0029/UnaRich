@@ -3,26 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>UnaRich - 報表</title>
+    <title>UnaRich - 月曆檢視</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  <body class="page-charts">
-    <header class="app-header"><h1>數據分析 📊</h1></header>
+  <body class="page-calendar">
+    <header class="app-header"><h1>收支月曆 📅</h1></header>
     <main class="container">
       <div class="month-selector card">
         <button onclick="changeMonth(-1)" class="nav-btn">◀</button>
         <div id="current-month-display">2026 年 03 月</div>
         <button onclick="changeMonth(1)" class="nav-btn">▶</button>
       </div>
-      <div class="card" id="summary-card"></div>
-      <div class="card">
-        <h2>💸 支出分佈</h2>
-        <div class="chart-container"><canvas id="expenseChart"></canvas></div>
+      <div class="card" style="padding: 10px">
+        <div class="calendar-grid" id="calendar-grid"></div>
       </div>
       <div class="card">
-        <h2>💰 收入分佈</h2>
-        <div class="chart-container"><canvas id="incomeChart"></canvas></div>
+        <h2 id="selected-date-title">今日明細</h2>
+        <div id="day-detail-list">
+          <p style="text-align: center; color: var(--text-sub)">點擊日期查看詳情</p>
+        </div>
       </div>
     </main>
     <div id="nav-placeholder"></div>

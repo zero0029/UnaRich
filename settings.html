@@ -5,54 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>UnaRich - 設定</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" type="image/png" />
   </head>
   <body class="page-settings">
-    <header class="app-header">
-      <h1>UnaRich 設定 ⚙️</h1>
-    </header>
-
+    <header class="app-header"><h1>設定 ⚙️</h1></header>
     <main class="container">
       <section class="card">
-        <h2 style="margin-bottom: 20px">外觀設定</h2>
-        <div style="display: flex; justify-content: space-between; align-items: center">
+        <h2>外觀設定</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px">
           <span>🌙 深色模式</span>
-          <button
-            id="dark-mode-toggle"
-            class="nav-btn"
-            onclick="toggleDarkMode()"
-            style="width: auto; border-radius: 12px; font-size: 14px; padding: 8px 20px"
-          >
-            開啟
-          </button>
+          <button id="dark-mode-toggle" class="nav-btn" onclick="toggleDarkMode()" style="width: 80px; border-radius: 10px">開啟</button>
         </div>
       </section>
-
-      <section class="card" style="text-align: center; color: var(--text-sub)">
-        <div style="font-size: 40px; margin-bottom: 10px">💰</div>
-        <h3>UnaRich v1.0</h3>
-        <p style="font-size: 13px; margin-top: 10px">妳的專屬致富小幫手</p>
-        <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 20px 0" />
-        <p style="font-size: 12px">資料儲存於您的瀏覽器中</p>
+      <section class="card" style="text-align: center">
+        <p>UnaRich v1.0</p>
+        <p style="font-size: 12px; color: var(--text-sub)">資料儲存於本地瀏覽器</p>
       </section>
     </main>
-
-    <nav class="bottom-nav">
-      <a href="index.html" class="nav-item">
-        <span class="nav-icon">📝</span>
-        <p>記帳</p>
-      </a>
-      <a href="charts.html" class="nav-item">
-        <span class="nav-icon">📊</span>
-        <p>報表</p>
-      </a>
-      <a href="settings.html" class="nav-item active">
-        <span class="nav-icon">⚙️</span>
-        <p>設定</p>
-      </a>
-    </nav>
-
+    <div id="nav-placeholder"></div>
     <script src="script.js"></script>
   </body>
 </html>
