@@ -1,6 +1,6 @@
 {
   "name": "UnaRich",
-  "short_name": "記帳本",
+  "short_name": "UnaRich",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f0f9ff",
