@@ -1,0 +1,191 @@
+/* --- 顏色劇本定義 --- */
+:root {
+    /* 淺色模式 (預設) */
+    --bg-color: #f0f9ff;         /* 極淺寶寶藍背景 */
+    --card-bg: #ffffff; 
+    --text-main: #4a4a4a;
+    --text-sub: #94a3b8;
+    --border-color: #eef2f5;
+    --card-shadow: rgba(162, 210, 255, 0.2);
+    
+    --primary: #ffd93d;          /* 亮檸檬黃 */
+    --secondary: #a2d2ff;        /* 經典寶寶藍 */
+    --accent: #6eb5ff;           /* 深一點的藍 */
+    --expense: #ff8b8b;          /* 柔和珊瑚紅 */
+    --income: #6bcb77;           /* 嫩葉綠 */
+    --nav-bg: rgba(255, 255, 255, 0.9);
+}
+
+/* 當 body 有 .dark-mode 類別時，覆蓋顏色變數 */
+body.dark-mode {
+    --bg-color: #121212;         /* 深黑背景 */
+    --card-bg: #1e1e1e;          /* 深灰卡片 */
+    --text-main: #e2e8f0;        /* 淺灰文字 */
+    --text-sub: #94a3b8;
+    --border-color: #333333;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    
+    --primary: #facc15;          /* 深色下稍微飽和的黃 */
+    --secondary: #3b82f6;        /* 深色下的藍 */
+    --accent: #60a5fa;
+    --nav-bg: rgba(30, 30, 30, 0.9);
+}
+
+/* --- 基礎樣式與字體優化 --- */
+* {
+    /* 你的聰明小技巧：利用極微小描邊讓邊角變圓 */
+    -webkit-text-stroke: 0.1px; 
+    box-sizing: border-box;
+}
+
+body { 
+    /* 套用 Noto Sans TC 並確保備援字體 */
+    font-family: 'Noto Sans TC', "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    background: var(--bg-color); 
+    margin: 0; 
+    padding: 15px; 
+    padding-bottom: 100px;
+    color: var(--text-main);
+    transition: background 0.3s, color 0.3s;
+    line-height: 1.5;
+}
+
+/* 深色模式下微調描邊，避免白字在黑底看起來太胖 */
+body.dark-mode * {
+    -webkit-text-stroke: 0.05px;
+}
+
+/* --- 卡片元件 --- */
+.card { 
+    background: var(--card-bg); 
+    padding: 20px; 
+    border-radius: 24px; 
+    box-shadow: 0 6px 20px var(--card-shadow);
+    margin-bottom: 15px; 
+    border: 1px solid var(--border-color);
+    transition: background 0.3s, border 0.3s;
+}
+
+h2 { 
+    margin: 0 0 15px 0; 
+    font-size: 1.15rem; 
+    color: var(--accent); 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-weight: 700;
+}
+
+/* --- 表單元件 --- */
+input, select, button { 
+    font-family: inherit; /* 讓輸入框與按鈕繼承 Noto Sans TC */
+    width: 100%; 
+    padding: 14px; 
+    margin: 8px 0; 
+    border: 2px solid var(--border-color); 
+    border-radius: 16px; 
+    font-size: 16px; 
+    outline: none;
+    background: var(--card-bg);
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+input:focus { 
+    border-color: var(--secondary); 
+}
+
+/* 類型選擇器 (支出/收入) */
+.type-selector { display: flex; gap: 10px; margin-bottom: 5px; }
+.type-btn { 
+    flex: 1; 
+    background: var(--card-bg); 
+    color: var(--text-sub);
+    font-weight: bold;
+    cursor: pointer;
+}
+.type-btn.active-exp { background: var(--expense); color: white; border-color: var(--expense); }
+.type-btn.active-inc { background: var(--income); color: white; border-color: var(--income); }
+
+/* 儲存按鈕 */
+.save-btn { 
+    background: var(--primary); 
+    color: #4a4a4a; 
+    border: none; 
+    font-weight: bold; 
+    margin-top: 10px; 
+    box-shadow: 0 4px 0 #e6c235; 
+    cursor: pointer;
+}
+.save-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #e6c235; }
+
+/* --- 紀錄列表 --- */
+.record-item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 14px 0; 
+    border-bottom: 1px solid var(--border-color); 
+}
+
+/* 這裡是為了之後加入「刪除按鈕」做的樣式預留 */
+.record-item:last-child { border-bottom: none; }
+
+.tag { 
+    font-size: 12px; 
+    background: var(--bg-color); 
+    color: var(--accent); 
+    padding: 4px 10px; 
+    border-radius: 12px; 
+}
+.date-label { font-size: 11px; color: var(--text-sub); }
+.amt-exp { color: var(--expense); font-weight: 800; }
+.amt-inc { color: var(--income); font-weight: 800; }
+
+/* --- 底部導覽列 --- */
+.nav-bar { 
+    position: fixed; 
+    bottom: 15px; 
+    left: 15px; 
+    right: 15px; 
+    background: var(--nav-bg); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); /* 確保 Safari/iPhone 支援 */
+    display: flex; 
+    border-radius: 20px; 
+    padding: 10px 0; 
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1); 
+    border: 1px solid var(--border-color);
+}
+.nav-item { 
+    flex: 1; 
+    text-align: center; 
+    font-size: 13px; 
+    color: var(--text-sub); 
+    cursor: pointer; 
+}
+.nav-item.active { 
+    color: var(--accent); 
+    font-weight: bold; 
+}
+
+/* --- 分頁顯示控制與動畫 --- */
+.page { display: none; }
+.page.active { display: block; animation: slideUp 0.3s ease-out; }
+
+@keyframes slideUp { 
+    from { opacity: 0; transform: translateY(20px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* 圖表容器 */
+canvas {
+    max-width: 100%;
+    margin-top: 10px;
+}
+
+/* 針對小螢幕的微調 */
+@media (max-width: 350px) {
+    .card { padding: 15px; }
+    h2 { font-size: 1rem; }
+}

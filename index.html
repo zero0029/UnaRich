@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>小黃藍記帳本</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#ffd93d" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div id="page-add" class="page active">
+      <div class="card">
+        <h2>☁️ 紀錄今天的小日子</h2>
+        <div class="type-selector">
+          <button id="btn-exp" class="type-btn active-exp" onclick="setType('支出')">💸 支出</button>
+          <button id="btn-inc" class="type-btn" onclick="setType('收入')">💰 收入</button>
+        </div>
+        <input type="date" id="record-date" />
+        <select id="category">
+          <option value="美味飽飽">🍱 美味飽飽</option>
+          <option value="交通嘟嘟">🚲 交通嘟嘟</option>
+          <option value="想買就買">🛒 想買就買</option>
+          <option value="生活點滴">🕯️ 生活點滴</option>
+          <option value="每月固定">📌 每月固定</option>
+          <option value="額外獎勵">✨ 額外獎勵</option>
+        </select>
+        <input type="number" id="amount" placeholder="多少錢呢？" inputmode="decimal" />
+        <input type="text" id="note" placeholder="寫點小筆記吧..." />
+        <button class="save-btn" onclick="addRecord()">🌟 儲存這筆紀錄</button>
+      </div>
+      <div class="card">
+        <h2>📜 最近的收支</h2>
+        <div id="recent-list"></div>
+      </div>
+    </div>
+    <div id="page-chart" class="page">
+      <div class="card">
+        <h2>📊 錢錢去哪兒</h2>
+        <canvas id="myChart"></canvas>
+      </div>
+      <div class="card" id="summary-card"></div>
+    </div>
+    <div id="page-settings" class="page">
+      <div class="card">
+        <h2>⚙️ 資料管理</h2>
+        <button style="background: var(--secondary); color: white; border: none" onclick="exportData()">📥 備份(JSON)</button>
+        <input type="file" id="importFile" accept=".json" style="margin-top: 20px" />
+        <button style="background: var(--accent); color: white; border: none" onclick="importData()">📤 恢復備份</button>
+      </div>
+      <div class="card">
+        <h2>🌙 外觀設定</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span>深色模式</span>
+          <button id="dark-mode-toggle" onclick="toggleDarkMode()" style="width: auto; padding: 8px 20px">開啟</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-bar">
+      <div class="nav-item active" onclick="showPage('add', this)">🐣 記帳</div>
+      <div class="nav-item" onclick="showPage('chart', this)">📈 報表</div>
+      <div class="nav-item" onclick="showPage('settings', this)">🛠️ 設定</div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
