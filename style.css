@@ -1,61 +1,67 @@
-/* --- 顏色劇本定義 --- */
+/* --- 1. 核心重設：解決所有跑版問題 --- */
+* {
+    margin: 0;
+    padding: 0;
+    /* 關鍵：確保 padding 不會撐開寬度，解決左右跑版 */
+    box-sizing: border-box; 
+    /* 你的聰明小技巧：讓字體邊角變圓 */
+    -webkit-text-stroke: 0.1px; 
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden; /* 徹底禁止左右晃動 */
+}
+
+/* --- 2. 顏色劇本定義 --- */
 :root {
-    /* 淺色模式 (預設) */
-    --bg-color: #f0f9ff;         /* 極淺寶寶藍背景 */
+    --bg-color: #f0f9ff;         
     --card-bg: #ffffff; 
     --text-main: #4a4a4a;
     --text-sub: #94a3b8;
     --border-color: #eef2f5;
     --card-shadow: rgba(162, 210, 255, 0.2);
     
-    --primary: #ffd93d;          /* 亮檸檬黃 */
-    --secondary: #a2d2ff;        /* 經典寶寶藍 */
-    --accent: #6eb5ff;           /* 深一點的藍 */
-    --expense: #ff8b8b;          /* 柔和珊瑚紅 */
-    --income: #6bcb77;           /* 嫩葉綠 */
+    --primary: #ffd93d;          
+    --secondary: #a2d2ff;        
+    --accent: #6eb5ff;           
+    --expense: #ff8b8b;          
+    --income: #6bcb77;           
     --nav-bg: rgba(255, 255, 255, 0.9);
 }
 
-/* 當 body 有 .dark-mode 類別時，覆蓋顏色變數 */
 body.dark-mode {
-    --bg-color: #121212;         /* 深黑背景 */
-    --card-bg: #1e1e1e;          /* 深灰卡片 */
-    --text-main: #e2e8f0;        /* 淺灰文字 */
+    --bg-color: #121212;         
+    --card-bg: #1e1e1e;          
+    --text-main: #e2e8f0;        
     --text-sub: #94a3b8;
     --border-color: #333333;
     --card-shadow: rgba(0, 0, 0, 0.4);
     
-    --primary: #facc15;          /* 深色下稍微飽和的黃 */
-    --secondary: #3b82f6;        /* 深色下的藍 */
+    --primary: #facc15;          
+    --secondary: #3b82f6;        
     --accent: #60a5fa;
     --nav-bg: rgba(30, 30, 30, 0.9);
 }
 
-/* --- 基礎樣式與字體優化 --- */
-* {
-    /* 你的聰明小技巧：利用極微小描邊讓邊角變圓 */
-    -webkit-text-stroke: 0.1px; 
-    box-sizing: border-box;
-}
-
+/* --- 3. 基礎樣式 --- */
 body { 
-    /* 套用 Noto Sans TC 並確保備援字體 */
     font-family: 'Noto Sans TC', "Microsoft JhengHei", "微軟正黑體", sans-serif;
     background: var(--bg-color); 
-    margin: 0; 
     padding: 15px; 
-    padding-bottom: 100px;
+    padding-bottom: 100px; /* 為底部導覽留空間 */
     color: var(--text-main);
     transition: background 0.3s, color 0.3s;
     line-height: 1.5;
 }
 
-/* 深色模式下微調描邊，避免白字在黑底看起來太胖 */
+/* 深色模式下微調描邊 */
 body.dark-mode * {
     -webkit-text-stroke: 0.05px;
 }
 
-/* --- 卡片元件 --- */
+/* --- 4. 卡片元件 --- */
 .card { 
     background: var(--card-bg); 
     padding: 20px; 
@@ -63,7 +69,7 @@ body.dark-mode * {
     box-shadow: 0 6px 20px var(--card-shadow);
     margin-bottom: 15px; 
     border: 1px solid var(--border-color);
-    transition: background 0.3s, border 0.3s;
+    width: 100%; /* 確保卡片不超出螢幕 */
 }
 
 h2 { 
@@ -73,15 +79,19 @@ h2 {
     display: flex; 
     align-items: center; 
     gap: 8px; 
-    font-weight: 700;
 }
 
-/* --- 表單元件 --- */
+/* --- 5. 表單元件：解決高度與寬度不對齊 --- */
 input, select, button { 
-    font-family: inherit; /* 讓輸入框與按鈕繼承 Noto Sans TC */
-    width: 100%; 
-    padding: 14px; 
+    font-family: inherit;
+    width: 100%; /* 寬度填滿卡片 */
+    display: block; 
+    
+    /* 統一高度與對齊 */
+    height: 50px; 
+    padding: 0 15px; 
     margin: 8px 0; 
+    
     border: 2px solid var(--border-color); 
     border-radius: 16px; 
     font-size: 16px; 
@@ -89,20 +99,44 @@ input, select, button {
     background: var(--card-bg);
     color: var(--text-main);
     transition: all 0.2s;
+    
+    /* 消除 iOS/Android 預設外觀 */
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* 針對日期欄位的垂直居中修正 */
+input[type="date"] {
+    display: flex;
+    align-items: center;
+}
+
+/* 針對 iOS Safari 日期文字位移修正 */
+input[type="date"]::-webkit-date-and-time-value {
+    line-height: 50px;
+    height: 50px;
 }
 
 input:focus { 
     border-color: var(--secondary); 
 }
 
-/* 類型選擇器 (支出/收入) */
-.type-selector { display: flex; gap: 10px; margin-bottom: 5px; }
+/* 類型選擇器 */
+.type-selector { 
+    display: flex; 
+    gap: 10px; 
+    margin-bottom: 5px; 
+    width: 100%;
+}
 .type-btn { 
     flex: 1; 
+    margin: 0; /* 覆蓋全域的 margin */
     background: var(--card-bg); 
     color: var(--text-sub);
     font-weight: bold;
     cursor: pointer;
+    justify-content: center;
+    align-items: center;
 }
 .type-btn.active-exp { background: var(--expense); color: white; border-color: var(--expense); }
 .type-btn.active-inc { background: var(--income); color: white; border-color: var(--income); }
@@ -115,11 +149,13 @@ input:focus {
     font-weight: bold; 
     margin-top: 10px; 
     box-shadow: 0 4px 0 #e6c235; 
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .save-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #e6c235; }
 
-/* --- 紀錄列表 --- */
+/* --- 6. 紀錄列表 --- */
 .record-item { 
     display: flex; 
     justify-content: space-between; 
@@ -127,10 +163,6 @@ input:focus {
     padding: 14px 0; 
     border-bottom: 1px solid var(--border-color); 
 }
-
-/* 這裡是為了之後加入「刪除按鈕」做的樣式預留 */
-.record-item:last-child { border-bottom: none; }
-
 .tag { 
     font-size: 12px; 
     background: var(--bg-color); 
@@ -142,7 +174,7 @@ input:focus {
 .amt-exp { color: var(--expense); font-weight: 800; }
 .amt-inc { color: var(--income); font-weight: 800; }
 
-/* --- 底部導覽列 --- */
+/* --- 7. 底部導覽列 --- */
 .nav-bar { 
     position: fixed; 
     bottom: 15px; 
@@ -150,12 +182,13 @@ input:focus {
     right: 15px; 
     background: var(--nav-bg); 
     backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); /* 確保 Safari/iPhone 支援 */
+    -webkit-backdrop-filter: blur(10px);
     display: flex; 
     border-radius: 20px; 
     padding: 10px 0; 
     box-shadow: 0 8px 30px rgba(0,0,0,0.1); 
     border: 1px solid var(--border-color);
+    z-index: 1000; /* 確保在最上層 */
 }
 .nav-item { 
     flex: 1; 
@@ -169,7 +202,7 @@ input:focus {
     font-weight: bold; 
 }
 
-/* --- 分頁顯示控制與動畫 --- */
+/* --- 8. 分頁與動畫 --- */
 .page { display: none; }
 .page.active { display: block; animation: slideUp 0.3s ease-out; }
 
@@ -178,14 +211,34 @@ input:focus {
     to { opacity: 1; transform: translateY(0); } 
 }
 
-/* 圖表容器 */
 canvas {
     max-width: 100%;
     margin-top: 10px;
 }
 
-/* 針對小螢幕的微調 */
-@media (max-width: 350px) {
-    .card { padding: 15px; }
-    h2 { font-size: 1rem; }
+/* 針對日期欄位的最終修正 */
+input[type="date"] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 讓文字在左，圖標在右 */
+    position: relative;
+    padding-right: 15px; /* 給右邊圖標一點空間 */
+}
+
+/* 針對 Chrome / Android 的小月曆圖標修正 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    position: absolute;
+    right: 15px; /* 強制把月曆圖標釘在最右邊 */
+    padding: 5px;
+    margin: 0;
+    filter: invert(0.5); /* 讓圖標顏色不要太深 (選配) */
+}
+
+/* 針對 iOS Safari 的特殊處理：確保文字不會擠到圖標 */
+input[type="date"]::-webkit-date-and-time-value {
+    flex: 1; /* 讓文字佔滿剩餘空間 */
+    text-align: left;
+    line-height: 50px;
+    height: 50px;
 }
